@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { extractCalendarJsonFromImage, OllamaApiError } from "@/lib/ollama";
 import { normalizeExtractedFusion } from "@/lib/fusion-schema";
+import { createFusionExtractionPrompt } from "@/lib/fusion-prompt";
 
 const MAX_IMAGE_SIZE = 20 * 1024 * 1024;
 const DEFAULT_OLLAMA_MODEL = "qwen3-vl:235b-cloud";
@@ -37,17 +38,27 @@ export async function POST(request: Request) {
 
   try {
     const buffer = Buffer.from(await image.arrayBuffer());
+    const currentYear = new Date().getFullYear();
     const rawText = await extractCalendarJsonFromImage({
       apiKey,
       base64Image: buffer.toString("base64"),
+      prompt: createFusionExtractionPrompt(currentYear),
       model,
       baseUrl
     });
     const parsed = parseJsonOnly(rawText);
-    const tracker = normalizeExtractedFusion(parsed);
+    const tracker = normalizeExtractedFusion(parsed, currentYear);
 
     if (tracker.events.length === 0) {
       return jsonError("AI could not detect events from this calendar. Try a clearer image.", 422);
+    }
+
+    const datedEvents = tracker.events.filter((event) => event.startDate && event.endDate).length;
+    if (tracker.events.length > 0 && datedEvents === 0) {
+      return jsonError(
+        "AI detected events but could not read their timeline positions. Try a higher-resolution calendar image or crop closer to the grid.",
+        422
+      );
     }
 
     return NextResponse.json(tracker);

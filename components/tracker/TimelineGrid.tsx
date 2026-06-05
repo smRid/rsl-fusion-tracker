@@ -23,6 +23,10 @@ export function TimelineGrid({
   const invalidEvents = tracker.events.filter(
     (event) => !parseDateSafe(event.startDate) || !parseDateSafe(event.endDate) || !dateRange.length
   );
+  const reviewGridGroups = {
+    Tournament: invalidEvents.filter((event) => event.type === "Tournament"),
+    Event: invalidEvents.filter((event) => event.type === "Event")
+  };
   const datedGroups = {
     Tournament: grouped.Tournament.filter((event) => !invalidEvents.includes(event)),
     Event: grouped.Event.filter((event) => !invalidEvents.includes(event))
@@ -59,14 +63,14 @@ export function TimelineGrid({
 
             <TimelineLane
               title="Tournaments"
-              events={datedGroups.Tournament}
+              events={[...datedGroups.Tournament, ...reviewGridGroups.Tournament]}
               rangeStart={dateRange[0]}
               dateCount={dateRange.length}
               onSelectEvent={onSelectEvent}
             />
             <TimelineLane
               title="Events"
-              events={datedGroups.Event}
+              events={[...datedGroups.Event, ...reviewGridGroups.Event]}
               rangeStart={dateRange[0]}
               dateCount={dateRange.length}
               onSelectEvent={onSelectEvent}
@@ -93,7 +97,7 @@ export function TimelineGrid({
                 <span className="font-bold text-slate-100">{event.name}</span>
                 <span className="ml-2 text-xs text-slate-400">{event.type}</span>
                 <p className="mt-1 text-xs text-yellow-100">
-                  {formatDisplayDate(event.startDate)} - {formatDisplayDate(event.endDate)} · {event.fragments ?? 0} fragments
+                  Click its timeline bar to set exact dates · {event.fragments ?? 0} fragments
                 </p>
               </button>
             ))}

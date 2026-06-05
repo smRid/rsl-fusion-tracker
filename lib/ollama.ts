@@ -1,5 +1,3 @@
-import { FUSION_EXTRACTION_PROMPT } from "./fusion-prompt";
-
 interface OllamaChatResponse {
   message?: {
     content?: string;
@@ -13,11 +11,13 @@ const DEFAULT_OLLAMA_BASE_URL = "https://ollama.com";
 export async function extractCalendarJsonFromImage({
   apiKey,
   base64Image,
+  prompt,
   model,
   baseUrl = DEFAULT_OLLAMA_BASE_URL
 }: {
   apiKey?: string;
   base64Image: string;
+  prompt: string;
   model: string;
   baseUrl?: string;
 }): Promise<string> {
@@ -34,7 +34,7 @@ export async function extractCalendarJsonFromImage({
       messages: [
         {
           role: "user",
-          content: FUSION_EXTRACTION_PROMPT,
+          content: prompt,
           images: [base64Image]
         }
       ],

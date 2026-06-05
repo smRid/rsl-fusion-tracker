@@ -1,8 +1,24 @@
-export const FUSION_EXTRACTION_PROMPT = `You are an AI calendar extraction engine.
+export function createFusionExtractionPrompt(currentYear: number): string {
+  return `You are an AI calendar extraction engine.
 
 Analyze this Raid: Shadow Legends fusion calendar image and extract the visible fusion schedule.
 
 Return JSON only.
+
+The image is a timeline calendar. The top row contains date columns. Event bars are placed horizontally under those date columns.
+
+Critical timeline extraction instructions:
+
+- Use the date columns across the top of the calendar as the source of truth.
+- For every event bar, determine startDate from the column where the left edge of the bar begins.
+- Determine endDate from the column where the right edge of the bar ends.
+- If a bar spans multiple columns, include every day it visually covers.
+- Do not return null for startDate or endDate when the bar is visible and aligned to date columns.
+- If the calendar shows month/day but not year, use year ${currentYear}.
+- If the calendar header shows a date range like "Jun 4 - Jun 17", use that as dateRange.
+- Read the vertical section labels: bars in the Tournaments area are type "Tournament"; bars in the Events area are type "Event".
+- Some bars include reward text like "15+10"; use the total obtainable fragment count for fragments.
+- The goal is to populate a timeline grid automatically, so each visible bar should have startDate and endDate whenever possible.
 
 Extract:
 
@@ -53,3 +69,4 @@ Expected JSON shape:
 ],
 "totalFragments": 150
 }`;
+}
