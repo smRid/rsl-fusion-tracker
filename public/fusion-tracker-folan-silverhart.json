@@ -1,0 +1,186 @@
+{
+  "id": "4506f6a1-2772-4ed8-9d9b-fbc8c68cd7d1",
+  "fusionName": "Folan Silverhart",
+  "dateRange": {
+    "start": "2026-06-04",
+    "end": "2026-06-17"
+  },
+  "requiredFragments": 100,
+  "totalFragments": 150,
+  "events": [
+    {
+      "id": "c75549f7-4a08-483e-baa9-79a097c31c20",
+      "name": "Champion Training Tournament",
+      "type": "Tournament",
+      "startDate": "2026-06-04",
+      "endDate": "2026-06-08",
+      "fragments": 20,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "a4f47466-57d1-48b3-bea0-326955aec29f",
+      "name": "Fire Knight Tournament",
+      "type": "Tournament",
+      "startDate": "2026-06-04",
+      "endDate": "2026-06-07",
+      "fragments": 5,
+      "status": "pending",
+      "needsReview": false,
+      "notes": ""
+    },
+    {
+      "id": "a069ac6b-b32d-4afd-9a9a-99985a9bbbfc",
+      "name": "Gear Hunters Event I",
+      "type": "Event",
+      "startDate": "2026-06-05",
+      "endDate": "2026-06-08",
+      "fragments": 5,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "00b4a21a-d8de-4f54-b453-5317dd71eae4",
+      "name": "Summon Rush I",
+      "type": "Event",
+      "startDate": "2026-06-05",
+      "endDate": "2026-06-08",
+      "fragments": 20,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "1ff04f01-6741-4c5a-923f-fb9cdd907044",
+      "name": "Classic Arena Takedown I",
+      "type": "Tournament",
+      "startDate": "2026-06-06",
+      "endDate": "2026-06-09",
+      "fragments": 5,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "25208ad9-b2d2-45d9-b5cf-543068e356df",
+      "name": "Gear Enhancement Event I",
+      "type": "Event",
+      "startDate": "2026-06-06",
+      "endDate": "2026-06-09",
+      "fragments": 5,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "a958f9d3-c366-4625-8a50-e410d93e1a2e",
+      "name": "Spider Tournament",
+      "type": "Tournament",
+      "startDate": "2026-06-07",
+      "endDate": "2026-06-10",
+      "fragments": 5,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "daeb65d5-a03d-46a8-8035-78fe2af0028a",
+      "name": "Gear Hunters Event II",
+      "type": "Event",
+      "startDate": "2026-06-09",
+      "endDate": "2026-06-12",
+      "fragments": 5,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "3224d3d8-0a0d-4ace-b27c-e18bdcdfe46e",
+      "name": "Summon Rush II",
+      "type": "Event",
+      "startDate": "2026-06-09",
+      "endDate": "2026-06-11",
+      "fragments": 15,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "838e94c0-2a9c-4328-b22b-9dbf5805ec29",
+      "name": "Gear Enhancement Event II",
+      "type": "Event",
+      "startDate": "2026-06-10",
+      "endDate": "2026-06-13",
+      "fragments": 5,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "75e5f9b1-64eb-41bb-b78f-c3531ebff18e",
+      "name": "Champion Training Event",
+      "type": "Event",
+      "startDate": "2026-06-11",
+      "endDate": "2026-06-15",
+      "fragments": 10,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "0ef15b36-2b95-4c3c-9150-e420f44bf1ef",
+      "name": "Ice Golem Tournament",
+      "type": "Tournament",
+      "startDate": "2026-06-11",
+      "endDate": "2026-06-14",
+      "fragments": 5,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "b3de4fff-f3a1-4b0a-984b-341ffaf175a1",
+      "name": "Champion Chase Tournament",
+      "type": "Tournament",
+      "startDate": "2026-06-12",
+      "endDate": "2026-06-15",
+      "fragments": 25,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "26895128-7c7c-46d0-81bb-c089f674d896",
+      "name": "Classic Arena Takedown II",
+      "type": "Tournament",
+      "startDate": "2026-06-13",
+      "endDate": "2026-06-16",
+      "fragments": 5,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "91bf18c9-9edb-4715-bd4c-548769bdb2a7",
+      "name": "Gear Hunters Event III",
+      "type": "Event",
+      "startDate": "2026-06-13",
+      "endDate": "2026-06-16",
+      "fragments": 5,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "4b9cc4d9-3066-4bb8-9da5-d6a828ad0cb8",
+      "name": "Dragon Tournament",
+      "type": "Tournament",
+      "startDate": "2026-06-14",
+      "endDate": "2026-06-17",
+      "fragments": 5,
+      "status": "pending",
+      "needsReview": false
+    },
+    {
+      "id": "1b32320b-3c47-4734-9e64-fceea742d9ea",
+      "name": "Gear Enhancement Event III",
+      "type": "Event",
+      "startDate": "2026-06-14",
+      "endDate": "2026-06-17",
+      "fragments": 5,
+      "status": "pending",
+      "needsReview": false
+    }
+  ],
+  "createdAt": "2026-06-05T15:18:42.084Z",
+  "updatedAt": "2026-06-05T15:28:29.039Z",
+  "source": "ai"
+}
