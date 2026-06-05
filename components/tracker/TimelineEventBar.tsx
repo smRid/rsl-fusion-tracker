@@ -7,23 +7,22 @@ import { formatDisplayDate, getEventDuration, getEventOffset } from "@/lib/date-
 export function TimelineEventBar({
   event,
   rangeStart,
-  dayWidth,
+  dayWidthCss,
   top,
   onClick
 }: {
   event: FusionEvent;
   rangeStart: string;
-  dayWidth: number;
+  dayWidthCss: string;
   top: number;
   onClick: () => void;
 }) {
   const startDate = event.startDate ?? rangeStart;
   const endDate = event.endDate ?? startDate;
-  const left = getEventOffset(rangeStart, startDate) * dayWidth + 12;
+  const offset = getEventOffset(rangeStart, startDate);
+  const duration = getEventDuration(startDate, endDate);
   const isMissingDates = !event.startDate || !event.endDate;
-  const width = isMissingDates
-    ? Math.max(dayWidth * 2 - 24, dayWidth - 18)
-    : Math.max(dayWidth - 18, getEventDuration(startDate, endDate) * dayWidth - 24);
+  const span = isMissingDates ? 2 : duration;
   const statusClass =
     event.status === "earned"
       ? "border-emerald-300/80 bg-emerald-700/90 text-emerald-50"
@@ -35,14 +34,18 @@ export function TimelineEventBar({
     <button
       type="button"
       onClick={onClick}
-      title={`${event.name} · ${formatDisplayDate(event.startDate)} - ${formatDisplayDate(event.endDate)}`}
-      className={`absolute flex h-11 items-center justify-between gap-2 rounded border px-3 text-left text-xs shadow-lg transition hover:-translate-y-0.5 hover:border-yellow-300 ${isMissingDates ? "border-dashed" : ""} ${statusClass}`}
-      style={{ left, top, width }}
+      title={`${event.name} - ${formatDisplayDate(event.startDate)} to ${formatDisplayDate(event.endDate)}`}
+      className={`absolute flex h-10 items-center justify-between gap-2 rounded border px-2.5 text-left text-[11px] shadow-lg transition hover:-translate-y-0.5 hover:border-yellow-300 sm:text-xs ${isMissingDates ? "border-dashed" : ""} ${statusClass}`}
+      style={{
+        left: `calc(${offset} * ${dayWidthCss} + 8px)`,
+        top,
+        width: `calc(${span} * ${dayWidthCss} - 16px)`
+      }}
     >
       <span className="min-w-0">
         <span className="block truncate font-black">{event.name}</span>
-        <span className="block truncate text-[11px] opacity-80">
-          {isMissingDates ? "Set dates" : event.type} · {event.status}
+        <span className="block truncate text-[10px] opacity-80 sm:text-[11px]">
+          {isMissingDates ? "Set dates" : event.type} - {event.status}
         </span>
       </span>
       <span className="flex shrink-0 items-center gap-1">

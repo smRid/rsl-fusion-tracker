@@ -89,28 +89,28 @@ export function TrackerDashboard({
           </div>
         </header>
 
-        <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
-          <section className="min-w-0 space-y-5">
-            <CalendarDetailsPanel tracker={sortedTracker} onSave={updateTrackerDetails} />
-            <TimelineGrid tracker={sortedTracker} onSelectEvent={setEditingEvent} />
-            <ManualEventForm
-              open={isAdding}
-              onCancel={() => setIsAdding(false)}
-              onAdd={(event) =>
-                handleAddEvent({
-                  ...event,
-                  id: createEventId(),
-                  status: event.status ?? "pending"
-                })
-              }
-            />
-          </section>
-
-          <aside className="space-y-5">
+        <div className="grid items-stretch gap-4 xl:grid-cols-2">
+          <CalendarDetailsPanel tracker={sortedTracker} onSave={updateTrackerDetails} />
+          <div className="grid items-stretch gap-4 md:grid-cols-2">
             <ProgressPanel tracker={sortedTracker} />
             <ImportExportPanel tracker={sortedTracker} onImport={onTrackerChange} />
-          </aside>
+          </div>
         </div>
+
+        <section className="mt-5 space-y-5">
+          <TimelineGrid tracker={sortedTracker} onSelectEvent={setEditingEvent} />
+          <ManualEventForm
+            open={isAdding}
+            onCancel={() => setIsAdding(false)}
+            onAdd={(event) =>
+              handleAddEvent({
+                ...event,
+                id: createEventId(),
+                status: event.status ?? "pending"
+              })
+            }
+          />
+        </section>
 
         <footer className="mt-8 border-t border-slate-800 pt-5 text-center text-xs text-slate-500">
           Fan-made utility tool. Not affiliated with Plarium or Raid: Shadow Legends.

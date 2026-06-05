@@ -31,7 +31,7 @@ export function ProgressPanel({ tracker }: { tracker: FusionTracker }) {
           : ShieldCheck;
 
   return (
-    <section className="rounded border border-slate-700 bg-slate-900/90 p-5">
+    <section className="h-full rounded border border-slate-700 bg-slate-900/90 p-5">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-xl font-black text-yellow-300">Progress</h2>
         <span className={`inline-flex items-center gap-2 rounded border px-3 py-1 text-xs font-bold ${statusClass}`}>

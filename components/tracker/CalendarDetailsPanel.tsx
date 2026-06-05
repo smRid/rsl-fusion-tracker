@@ -62,7 +62,7 @@ export function CalendarDetailsPanel({
   }
 
   return (
-    <section className="rounded border border-cyan-500/40 bg-slate-900/90 p-5">
+    <section className="h-full rounded border border-cyan-500/40 bg-slate-900/90 p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h2 className="text-xl font-black text-yellow-300">Calendar Details</h2>

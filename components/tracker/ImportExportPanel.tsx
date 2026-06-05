@@ -49,7 +49,7 @@ export function ImportExportPanel({
   }
 
   return (
-    <section className="rounded border border-slate-700 bg-slate-900/90 p-5">
+    <section className="h-full rounded border border-slate-700 bg-slate-900/90 p-5">
       <h2 className="text-xl font-black text-yellow-300">Import / Export</h2>
       <p className="mt-2 text-sm text-slate-300">
         Move this tracker between browsers or keep a backup of your manual edits.
