@@ -97,10 +97,12 @@ export function TrackerDashboard({
           className={`grid items-stretch gap-4 ${
             showAdminTools
               ? "xl:grid-cols-[minmax(0,1.8fr)_minmax(260px,0.75fr)_minmax(260px,0.75fr)]"
-              : "xl:grid-cols-[minmax(0,2fr)_minmax(280px,0.9fr)]"
+              : "xl:grid-cols-[minmax(280px,0.45fr)]"
           }`}
         >
-          <CalendarDetailsPanel tracker={sortedTracker} onSave={updateTrackerDetails} editable={showAdminTools} />
+          {showAdminTools ? (
+            <CalendarDetailsPanel tracker={sortedTracker} onSave={updateTrackerDetails} editable />
+          ) : null}
           <ProgressPanel tracker={sortedTracker} showStatusMessage={showAdminTools} />
           {showAdminTools ? (
             <ImportExportPanel tracker={sortedTracker} onImport={onTrackerChange} />
