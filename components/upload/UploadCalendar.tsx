@@ -38,13 +38,15 @@ export function UploadCalendar({
   eyebrow = "Raid: Shadow Legends",
   title = "AI Fusion Tracker",
   subtitle = "Upload a Raid fusion calendar and generate your tracker automatically.",
-  showTrackerActions = false
+  showTrackerActions = false,
+  showUploadTool = false
 }: {
   trackerPath?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
   showTrackerActions?: boolean;
+  showUploadTool?: boolean;
 } = {}) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -208,93 +210,95 @@ export function UploadCalendar({
           ))}
         </div>
 
-        <section className="grid flex-1 gap-6">
-          <div
-            onDragOver={(event) => event.preventDefault()}
-            onDrop={(event) => {
-              event.preventDefault();
-              chooseFile(event.dataTransfer.files.item(0));
-            }}
-            className={`min-h-[420px] rounded border border-dashed border-cyan-400/60 bg-slate-900/75 p-6 shadow-glow ${
-              previewUrl ? "grid items-center gap-5 lg:grid-cols-[minmax(0,1fr)_220px]" : "flex flex-col items-center justify-center text-center"
-            }`}
-          >
-            {previewUrl ? (
-              <img
-                src={previewUrl}
-                alt="Selected fusion calendar preview"
-                className="max-h-[520px] w-full rounded border border-slate-700 object-contain"
-              />
-            ) : (
-              <div className="max-w-lg">
-                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-400/10">
-                  <Upload className="h-9 w-9 text-cyan-300" />
+        {showUploadTool ? (
+          <section className="grid flex-1 gap-6">
+            <div
+              onDragOver={(event) => event.preventDefault()}
+              onDrop={(event) => {
+                event.preventDefault();
+                chooseFile(event.dataTransfer.files.item(0));
+              }}
+              className={`min-h-[420px] rounded border border-dashed border-cyan-400/60 bg-slate-900/75 p-6 shadow-glow ${
+                previewUrl ? "grid items-center gap-5 lg:grid-cols-[minmax(0,1fr)_220px]" : "flex flex-col items-center justify-center text-center"
+              }`}
+            >
+              {previewUrl ? (
+                <img
+                  src={previewUrl}
+                  alt="Selected fusion calendar preview"
+                  className="max-h-[520px] w-full rounded border border-slate-700 object-contain"
+                />
+              ) : (
+                <div className="max-w-lg">
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-400/10">
+                    <Upload className="h-9 w-9 text-cyan-300" />
+                  </div>
+                  <h2 className="mt-5 text-2xl font-bold text-slate-50">Drop your fusion calendar here</h2>
+                  <p className="mt-3 text-sm leading-6 text-slate-300">
+                    Use the official calendar image. The AI extractor reads visible dates, event names, categories, and fragment counts.
+                  </p>
                 </div>
-                <h2 className="mt-5 text-2xl font-bold text-slate-50">Drop your fusion calendar here</h2>
-                <p className="mt-3 text-sm leading-6 text-slate-300">
-                  Use the official calendar image. The AI extractor reads visible dates, event names, categories, and fragment counts.
-                </p>
-              </div>
-            )}
+              )}
 
-            <input
-              ref={inputRef}
-              type="file"
-              accept="image/png,image/jpeg,image/jpg,image/webp"
-              className="sr-only"
-              onChange={(event) => chooseFile(event.target.files?.item(0) ?? null)}
-            />
+              <input
+                ref={inputRef}
+                type="file"
+                accept="image/png,image/jpeg,image/jpg,image/webp"
+                className="sr-only"
+                onChange={(event) => chooseFile(event.target.files?.item(0) ?? null)}
+              />
 
-            <div className={previewUrl ? "flex flex-col items-stretch gap-4" : "mt-6 flex flex-wrap items-center justify-center gap-3"}>
-              <div className={previewUrl ? "grid gap-3" : "contents"}>
-                <button
-                  type="button"
-                  onClick={() => inputRef.current?.click()}
-                  className="inline-flex items-center justify-center gap-2 rounded border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-100 hover:border-cyan-400"
-                >
-                  <FileImage className="h-4 w-4" />
-                  Choose Image
-                </button>
+              <div className={previewUrl ? "flex flex-col items-stretch gap-4" : "mt-6 flex flex-wrap items-center justify-center gap-3"}>
+                <div className={previewUrl ? "grid gap-3" : "contents"}>
+                  <button
+                    type="button"
+                    onClick={() => inputRef.current?.click()}
+                    className="inline-flex items-center justify-center gap-2 rounded border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-100 hover:border-cyan-400"
+                  >
+                    <FileImage className="h-4 w-4" />
+                    Choose Image
+                  </button>
+                  {selectedFile ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedFile(null);
+                        setError(null);
+                      }}
+                      className="inline-flex items-center justify-center gap-2 rounded border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-300 hover:bg-slate-800"
+                    >
+                      <X className="h-4 w-4" />
+                      Clear
+                    </button>
+                  ) : null}
+                </div>
+
+                {selectedFile ? (
+                  <div className="rounded border border-slate-700 bg-slate-950/60 p-3 text-left text-sm">
+                    <p className="break-words font-semibold text-slate-100">{selectedFile.name}</p>
+                    <p className="mt-1 text-slate-400">{(selectedFile.size / 1024 / 1024).toFixed(2)} MB</p>
+                  </div>
+                ) : null}
+
+                {error ? (
+                  <div className="rounded border border-rose-500/50 bg-rose-950/40 p-3 text-sm text-rose-100">{error}</div>
+                ) : null}
+
                 {selectedFile ? (
                   <button
                     type="button"
-                    onClick={() => {
-                      setSelectedFile(null);
-                      setError(null);
-                    }}
-                    className="inline-flex items-center justify-center gap-2 rounded border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-300 hover:bg-slate-800"
+                    disabled={isProcessing}
+                    onClick={handleGenerate}
+                    className="inline-flex items-center justify-center gap-2 rounded bg-yellow-400 px-5 py-3 text-sm font-black text-slate-950 hover:bg-yellow-300 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    <X className="h-4 w-4" />
-                    Clear
+                    {isProcessing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                    {isProcessing ? PROCESSING_STEPS[processingStep] : "Generate Timeline"}
                   </button>
                 ) : null}
               </div>
-
-              {selectedFile ? (
-                <div className="rounded border border-slate-700 bg-slate-950/60 p-3 text-left text-sm">
-                  <p className="break-words font-semibold text-slate-100">{selectedFile.name}</p>
-                  <p className="mt-1 text-slate-400">{(selectedFile.size / 1024 / 1024).toFixed(2)} MB</p>
-                </div>
-              ) : null}
-
-              {error ? (
-                <div className="rounded border border-rose-500/50 bg-rose-950/40 p-3 text-sm text-rose-100">{error}</div>
-              ) : null}
-
-              {selectedFile ? (
-                <button
-                  type="button"
-                  disabled={isProcessing}
-                  onClick={handleGenerate}
-                  className="inline-flex items-center justify-center gap-2 rounded bg-yellow-400 px-5 py-3 text-sm font-black text-slate-950 hover:bg-yellow-300 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {isProcessing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
-                  {isProcessing ? PROCESSING_STEPS[processingStep] : "Generate Timeline"}
-                </button>
-              ) : null}
             </div>
-          </div>
-        </section>
+          </section>
+        ) : null}
 
         <footer className="mt-8 border-t border-slate-800 pt-5 text-center text-xs text-slate-500">
           Fan-made utility tool. Not affiliated with Plarium or Raid: Shadow Legends.
