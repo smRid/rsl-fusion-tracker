@@ -39,7 +39,8 @@ export function UploadCalendar({
   title = "AI Fusion Tracker",
   subtitle = "Upload a Raid fusion calendar and generate your tracker automatically.",
   showTrackerActions = false,
-  showUploadTool = false
+  showUploadTool = false,
+  preserveSavedTracker = true
 }: {
   trackerPath?: string;
   eyebrow?: string;
@@ -47,6 +48,7 @@ export function UploadCalendar({
   subtitle?: string;
   showTrackerActions?: boolean;
   showUploadTool?: boolean;
+  preserveSavedTracker?: boolean;
 } = {}) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -144,6 +146,14 @@ export function UploadCalendar({
     setError(null);
 
     try {
+      if (preserveSavedTracker) {
+        const savedTracker = getTracker();
+        if (savedTracker?.fusionName === preset.name) {
+          router.push(trackerPath);
+          return;
+        }
+      }
+
       const response = await fetch(preset.trackerSrc);
 
       if (!response.ok) {

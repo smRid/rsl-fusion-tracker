@@ -22,6 +22,7 @@ export default async function AdminPage() {
         subtitle="Upload, load, and manage fusion calendar trackers from the protected admin area."
         showTrackerActions
         showUploadTool
+        preserveSavedTracker={false}
       />
     </>
   );
