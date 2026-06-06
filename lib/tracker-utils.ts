@@ -27,14 +27,38 @@ export function createEventId(): string {
 }
 
 export function calculateTotalFragments(events: FusionEvent[]): number {
-  return events.reduce((sum, event) => sum + Math.max(0, event.fragments ?? 0), 0);
+  return events.reduce((sum, event) => sum + getEventFragmentTotal(event), 0);
+}
+
+export function getEventFragmentTotal(event: FusionEvent): number {
+  return Math.max(0, event.fragments ?? 0) + Math.max(0, event.leaderboardFragments ?? 0);
+}
+
+export function getEventEarnedTotal(event: FusionEvent): number {
+  if (event.status !== "earned") {
+    return 0;
+  }
+
+  return event.earnedFragments === null || event.earnedFragments === undefined
+    ? getEventFragmentTotal(event)
+    : Math.max(0, event.earnedFragments);
 }
 
 export function calculateProgress(tracker: FusionTracker): TrackerProgress {
-  const totalFragments = tracker.totalFragments || calculateTotalFragments(tracker.events);
-  const earnedFragments = sumByStatus(tracker.events, "earned");
+  const totalFragments = calculateTotalFragments(tracker.events) || tracker.totalFragments;
+  const earnedFragments = tracker.events.reduce((sum, event) => sum + getEventEarnedTotal(event), 0);
   const skippedFragments = sumByStatus(tracker.events, "skipped");
-  const pendingFragments = sumByStatus(tracker.events, "pending");
+  const pendingFragments = tracker.events.reduce((sum, event) => {
+    if (event.status === "pending") {
+      return sum + getEventFragmentTotal(event);
+    }
+
+    if (event.status === "earned" && event.earnedFragments !== null && event.earnedFragments !== undefined) {
+      return sum + Math.max(0, getEventFragmentTotal(event) - event.earnedFragments);
+    }
+
+    return sum;
+  }, 0);
   const remainingNeeded = Math.max(0, tracker.requiredFragments - earnedFragments);
   const possibleFinalFragments = earnedFragments + pendingFragments;
   const percentComplete = Math.min(100, Math.round((earnedFragments / tracker.requiredFragments) * 100));
@@ -122,6 +146,8 @@ function normalizeEvent(raw: unknown): FusionEvent {
     startDate: normalizeIsoDate(raw.startDate),
     endDate: normalizeIsoDate(raw.endDate),
     fragments: toNonNegativeNumber(raw.fragments),
+    leaderboardFragments: toNonNegativeNumber(raw.leaderboardFragments),
+    earnedFragments: toNonNegativeNumber(raw.earnedFragments),
     gridPosition: toPositiveNumber(raw.gridPosition),
     status: normalizeStatus(raw.status),
     needsReview: Boolean(raw.needsReview) || !normalizeIsoDate(raw.startDate) || !normalizeIsoDate(raw.endDate),
@@ -202,7 +228,7 @@ function toPositiveNumber(raw: unknown): number {
 function sumByStatus(events: FusionEvent[], status: FusionEventStatus): number {
   return events
     .filter((event) => event.status === status)
-    .reduce((sum, event) => sum + Math.max(0, event.fragments ?? 0), 0);
+    .reduce((sum, event) => sum + getEventFragmentTotal(event), 0);
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

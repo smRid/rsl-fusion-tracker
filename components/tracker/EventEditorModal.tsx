@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Trash2, X } from "lucide-react";
 import type { FusionEvent, FusionEventStatus, FusionEventType } from "@/types/fusion";
 import { parseDateSafe } from "@/lib/date-utils";
+import { getEventFragmentTotal } from "@/lib/tracker-utils";
 
 export function EventEditorModal({
   event,
@@ -94,6 +95,8 @@ export function EventFields({
   draft: FusionEvent;
   onChange: (event: FusionEvent) => void;
 }) {
+  const earnedFragmentOptions = getEarnedFragmentOptions(draft);
+
   return (
     <div className="mt-5 grid gap-4 sm:grid-cols-2">
       <label className="sm:col-span-2">
@@ -118,12 +121,16 @@ export function EventFields({
       <label>
         <span className="text-sm font-bold text-slate-200">Status</span>
         <select
-          value={draft.status}
-          onChange={(event) => onChange({ ...draft, status: event.target.value as FusionEventStatus })}
+          value={getStatusSelectValue(draft)}
+          onChange={(event) => onChange(applyStatusSelectValue(draft, event.target.value))}
           className="mt-1 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-cyan-400"
         >
           <option value="pending">pending</option>
-          <option value="earned">earned</option>
+          {earnedFragmentOptions.map((fragments) => (
+            <option key={fragments} value={`earned-${fragments}`}>
+              earned {fragments}
+            </option>
+          ))}
           <option value="skipped">skipped</option>
         </select>
       </label>
@@ -146,7 +153,7 @@ export function EventFields({
         />
       </label>
       <label>
-        <span className="text-sm font-bold text-slate-200">Fragments</span>
+        <span className="text-sm font-bold text-slate-200">Main Fragments</span>
         <input
           type="number"
           min="0"
@@ -155,6 +162,21 @@ export function EventFields({
             onChange({
               ...draft,
               fragments: event.target.value === "" ? null : Math.max(0, Number(event.target.value))
+            })
+          }
+          className="mt-1 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-cyan-400"
+        />
+      </label>
+      <label>
+        <span className="text-sm font-bold text-slate-200">Leaderboard Fragments</span>
+        <input
+          type="number"
+          min="0"
+          value={draft.leaderboardFragments ?? ""}
+          onChange={(event) =>
+            onChange({
+              ...draft,
+              leaderboardFragments: event.target.value === "" ? null : Math.max(0, Number(event.target.value))
             })
           }
           className="mt-1 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-cyan-400"
@@ -204,6 +226,27 @@ export function validateEvent(event: FusionEvent): string | null {
   if (event.fragments !== null && (!Number.isFinite(event.fragments) || event.fragments < 0)) {
     return "Fragments must be a number greater than or equal to 0.";
   }
+  if (
+    event.leaderboardFragments !== null &&
+    event.leaderboardFragments !== undefined &&
+    (!Number.isFinite(event.leaderboardFragments) || event.leaderboardFragments < 0)
+  ) {
+    return "Leaderboard fragments must be a number greater than or equal to 0.";
+  }
+  if (
+    event.earnedFragments !== null &&
+    event.earnedFragments !== undefined &&
+    (!Number.isFinite(event.earnedFragments) || event.earnedFragments < 0)
+  ) {
+    return "Earned fragments must be a number greater than or equal to 0.";
+  }
+  if (
+    event.earnedFragments !== null &&
+    event.earnedFragments !== undefined &&
+    event.earnedFragments > getEventFragmentTotal(event)
+  ) {
+    return "Earned fragments cannot be greater than this event's available fragments.";
+  }
   if (!Number.isFinite(event.gridPosition) || event.gridPosition < 1) {
     return "Grid position must be a number greater than or equal to 1.";
   }
@@ -221,4 +264,37 @@ export function validateEvent(event: FusionEvent): string | null {
     }
   }
   return null;
+}
+
+function getStatusSelectValue(event: FusionEvent): string {
+  if (event.status === "earned") {
+    return `earned-${event.earnedFragments ?? getEventFragmentTotal(event)}`;
+  }
+
+  return event.status;
+}
+
+function applyStatusSelectValue(event: FusionEvent, value: string): FusionEvent {
+  if (value.startsWith("earned-")) {
+    return {
+      ...event,
+      status: "earned",
+      earnedFragments: Math.max(0, Number(value.replace("earned-", "")))
+    };
+  }
+
+  return {
+    ...event,
+    status: value as FusionEventStatus,
+    earnedFragments: null
+  };
+}
+
+function getEarnedFragmentOptions(event: FusionEvent): number[] {
+  const mainFragments = Math.max(0, event.fragments ?? 0);
+  const totalFragments = getEventFragmentTotal(event);
+
+  return [...new Set([mainFragments, totalFragments].filter((fragments) => fragments > 0))].sort(
+    (first, second) => first - second
+  );
 }

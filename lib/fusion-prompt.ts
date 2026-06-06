@@ -17,7 +17,7 @@ Critical timeline extraction instructions:
 - If the calendar shows month/day but not year, use year ${currentYear}.
 - If the calendar header shows a date range like "Jun 4 - Jun 17", use that as dateRange.
 - Read the vertical section labels: bars in the Tournaments area are type "Tournament"; bars in the Events area are type "Event".
-- Some bars include reward text like "15+10"; use the total obtainable fragment count for fragments.
+- Some bars include reward text like "15+10"; use the first/main value for fragments and the second/leaderboard value for leaderboardFragments.
 - The goal is to populate a timeline grid automatically, so each visible bar should have startDate and endDate whenever possible.
 
 Extract:
@@ -30,6 +30,7 @@ Extract:
 - Start date
 - End date
 - Fragment reward count
+- Leaderboard fragment reward count when shown separately
 - Total fragments available if visible
 
 Rules:
@@ -41,6 +42,7 @@ Rules:
 - Extract only visible information.
 - If a date is unclear, use null.
 - If a fragment value is unclear, use null.
+- If leaderboard fragments are not shown separately, use null for leaderboardFragments.
 - If an item is partially unclear, set needsReview to true.
 - Use ISO date format: YYYY-MM-DD.
 - Event type must be exactly "Tournament" or "Event".
@@ -64,6 +66,7 @@ Expected JSON shape:
 "startDate": "2026-06-04",
 "endDate": "2026-06-06",
 "fragments": 5,
+"leaderboardFragments": null,
 "needsReview": false
 }
 ],

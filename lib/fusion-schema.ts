@@ -18,6 +18,7 @@ export const extractedFusionSchema = z.object({
       startDate: flexibleValueSchema,
       endDate: flexibleValueSchema,
       fragments: flexibleValueSchema,
+      leaderboardFragments: flexibleValueSchema,
       needsReview: z.boolean().optional()
     })
   ),
@@ -31,6 +32,7 @@ export function normalizeExtractedFusion(raw: unknown, currentYear = new Date().
     startDate: normalizeExtractedDate(event.startDate, currentYear),
     endDate: normalizeExtractedDate(event.endDate, currentYear),
     fragments: normalizeExtractedNumber(event.fragments),
+    leaderboardFragments: normalizeExtractedNumber(event.leaderboardFragments),
     needsReview:
       Boolean(event.needsReview) ||
       !normalizeExtractedDate(event.startDate, currentYear) ||

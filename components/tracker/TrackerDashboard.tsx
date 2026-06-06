@@ -8,7 +8,6 @@ import { ProgressPanel } from "./ProgressPanel";
 import { TimelineGrid } from "./TimelineGrid";
 import { EventEditorModal } from "./EventEditorModal";
 import { ManualEventForm } from "./ManualEventForm";
-import { ImportExportPanel } from "./ImportExportPanel";
 import { CalendarDetailsPanel } from "./CalendarDetailsPanel";
 
 export function TrackerDashboard({
@@ -89,12 +88,9 @@ export function TrackerDashboard({
           </div>
         </header>
 
-        <div className="grid items-stretch gap-4 xl:grid-cols-2">
+        <div className="grid items-stretch gap-4 xl:grid-cols-[minmax(0,2fr)_minmax(280px,0.9fr)]">
           <CalendarDetailsPanel tracker={sortedTracker} onSave={updateTrackerDetails} />
-          <div className="grid items-stretch gap-4 md:grid-cols-2">
-            <ProgressPanel tracker={sortedTracker} />
-            <ImportExportPanel tracker={sortedTracker} onImport={onTrackerChange} />
-          </div>
+          <ProgressPanel tracker={sortedTracker} />
         </div>
 
         <section className="mt-5 space-y-5">

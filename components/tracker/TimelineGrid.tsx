@@ -2,7 +2,7 @@
 
 import type { FusionEvent, FusionTracker } from "@/types/fusion";
 import { formatDisplayDate, getDateRange, parseDateSafe } from "@/lib/date-utils";
-import { groupEventsByType } from "@/lib/tracker-utils";
+import { getEventFragmentTotal, groupEventsByType } from "@/lib/tracker-utils";
 import { TimelineEventBar } from "./TimelineEventBar";
 
 const ROW_HEIGHT = 50;
@@ -100,7 +100,7 @@ export function TimelineGrid({
                 <span className="font-bold text-slate-100">{event.name}</span>
                 <span className="ml-2 text-xs text-slate-400">{event.type}</span>
                 <p className="mt-1 text-xs text-yellow-100">
-                  Click its timeline bar to set exact dates - {event.fragments ?? 0} fragments
+                  Click its timeline bar to set exact dates - {getEventFragmentTotal(event)} fragments
                 </p>
               </button>
             ))}

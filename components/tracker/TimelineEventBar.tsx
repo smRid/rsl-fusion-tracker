@@ -23,6 +23,7 @@ export function TimelineEventBar({
   const duration = getEventDuration(startDate, endDate);
   const isMissingDates = !event.startDate || !event.endDate;
   const span = isMissingDates ? 2 : duration;
+  const leaderboardFragments = event.leaderboardFragments ?? 0;
   const statusClass =
     event.status === "earned"
       ? "border-emerald-300/80 bg-emerald-700/90 text-emerald-50"
@@ -45,15 +46,26 @@ export function TimelineEventBar({
       <span className="min-w-0">
         <span className="block truncate font-black">{event.name}</span>
         <span className="block truncate text-[10px] opacity-80 sm:text-[11px]">
-          {isMissingDates ? "Set dates" : event.type} - {event.status}
+          {isMissingDates ? "Set dates" : event.type} - {formatStatus(event)}
         </span>
       </span>
       <span className="flex shrink-0 items-center gap-1">
         {event.needsReview ? <AlertTriangle className="h-4 w-4 text-yellow-200" /> : null}
         <span className="rounded border border-yellow-300/70 bg-slate-950/75 px-2 py-1 font-black text-yellow-200">
           {event.fragments ?? "?"}
+          {leaderboardFragments > 0 ? (
+            <span className="text-emerald-300">+{leaderboardFragments}</span>
+          ) : null}
         </span>
       </span>
     </button>
   );
+}
+
+function formatStatus(event: FusionEvent): string {
+  if (event.status === "earned" && event.earnedFragments !== null && event.earnedFragments !== undefined) {
+    return `earned ${event.earnedFragments}`;
+  }
+
+  return event.status;
 }
