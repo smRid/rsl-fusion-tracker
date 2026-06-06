@@ -46,12 +46,16 @@ export function EventEditorModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
       <section
-        className={`max-h-[92vh] w-full overflow-y-auto rounded border border-cyan-500/50 bg-slate-900 shadow-glow ${
-          editable ? "max-w-2xl p-5" : "max-w-sm p-4"
+        className={`max-h-[92vh] w-full overflow-y-auto border shadow-glow ${
+          editable
+            ? "max-w-2xl rounded border-cyan-500/50 bg-slate-900 p-5"
+            : "max-w-xs rounded border-cyan-300/70 bg-slate-950 p-4"
         }`}
       >
         <div className="flex items-center justify-between gap-3">
-          <h2 className="text-xl font-black text-yellow-300">Edit Event</h2>
+          <h2 className={editable ? "text-xl font-black text-yellow-300" : "text-lg font-black uppercase tracking-[0.08em] text-yellow-300"}>
+            {editable ? "Edit Event" : "Edit Status"}
+          </h2>
           <button type="button" onClick={onCancel} className="rounded p-2 text-slate-300 hover:bg-slate-800">
             <X className="h-5 w-5" />
           </button>
@@ -67,7 +71,7 @@ export function EventEditorModal({
           <div className="mt-4 rounded border border-rose-500/50 bg-rose-950/40 p-3 text-sm text-rose-100">{error}</div>
         ) : null}
 
-        <div className={`${editable ? "mt-5" : "mt-4"} flex flex-wrap justify-between gap-3`}>
+        <div className={`${editable ? "mt-5 justify-between" : "mt-4 justify-end"} flex flex-wrap gap-3`}>
           {editable ? (
             <button
               type="button"
@@ -112,13 +116,13 @@ function StatusOnlyFields({
   const earnedFragmentOptions = getEarnedFragmentOptions(draft);
 
   return (
-    <div className="mt-4">
-      <label>
-        <span className="text-sm font-bold text-slate-200">Status</span>
+    <div className="mt-4 rounded border border-cyan-500/30 bg-[linear-gradient(180deg,rgba(8,47,73,0.35),rgba(2,6,23,0.55))] p-3">
+      <label className="block">
+        <span className="sr-only">Status</span>
         <select
           value={getStatusSelectValue(draft)}
           onChange={(event) => onChange(applyStatusSelectValue(draft, event.target.value))}
-          className="mt-1 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-cyan-400"
+          className="w-full rounded border border-cyan-400/70 bg-slate-950 px-3 py-2.5 text-sm font-black text-slate-100 outline-none focus:border-yellow-300"
         >
           <option value="pending">pending</option>
           {earnedFragmentOptions.map((fragments) => (
