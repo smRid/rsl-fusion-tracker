@@ -28,7 +28,7 @@ const PRESET_TRACKERS = [
     id: "masahiro-the-bell-monk",
     eyebrow: "MAY 2026 FUSION",
     name: "Masahiro the Bell Monk",
-    imageSrc: "/masahiro%20the%20bell%20monk.png",
+    imageSrc: "/masahiro-the-bell-monk.webp",
     trackerSrc: "/fusion-tracker-masahiro-the-bell-monk.json"
   }
 ];
@@ -37,12 +37,14 @@ export function UploadCalendar({
   trackerPath = "/tracker",
   eyebrow = "Raid: Shadow Legends",
   title = "AI Fusion Tracker",
-  subtitle = "Upload a Raid fusion calendar and generate your tracker automatically."
+  subtitle = "Upload a Raid fusion calendar and generate your tracker automatically.",
+  showTrackerActions = false
 }: {
   trackerPath?: string;
   eyebrow?: string;
   title?: string;
   subtitle?: string;
+  showTrackerActions?: boolean;
 } = {}) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -175,7 +177,7 @@ export function UploadCalendar({
               {subtitle}
             </p>
           </div>
-          {existingTracker ? (
+          {showTrackerActions && existingTracker ? (
             <div className="flex gap-3">
               <Link
                 href={trackerPath}

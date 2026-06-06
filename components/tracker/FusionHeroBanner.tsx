@@ -7,7 +7,7 @@ import { calculateProgress } from "@/lib/tracker-utils";
 
 const championImages: Record<string, string> = {
   "folan silverhart": "/Folan Silverhart.webp",
-  "masahiro the bell monk": "/masahiro%20the%20bell%20monk.png"
+  "masahiro the bell monk": "/masahiro-the-bell-monk.webp"
 };
 
 export function FusionHeroBanner({ tracker }: { tracker: FusionTracker }) {

@@ -20,6 +20,7 @@ export default async function AdminPage() {
         eyebrow="Fusion Calendar Admin"
         title="Admin Fusion Tracker"
         subtitle="Upload, load, and manage fusion calendar trackers from the protected admin area."
+        showTrackerActions
       />
     </>
   );
