@@ -10,6 +10,7 @@ import { EventEditorModal } from "./EventEditorModal";
 import { ManualEventForm } from "./ManualEventForm";
 import { CalendarDetailsPanel } from "./CalendarDetailsPanel";
 import { ImportExportPanel } from "./ImportExportPanel";
+import { FusionHeroBanner } from "./FusionHeroBanner";
 
 export function TrackerDashboard({
   tracker,
@@ -59,19 +60,19 @@ export function TrackerDashboard({
   return (
     <main className="min-h-screen rsl-grid-bg px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <header className="mb-6 flex flex-wrap items-start justify-between gap-4 border-b border-cyan-500/30 pb-5">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-300">
-              Fusion Calendar
-            </p>
-            <h1 className="mt-1 text-3xl font-black text-yellow-400 sm:text-5xl">
-              {sortedTracker.fusionName ?? "Unnamed Fusion"}
-            </h1>
-            <p className="mt-2 text-sm text-slate-300">
-              {sortedTracker.dateRange.start ?? "Unknown start"} - {sortedTracker.dateRange.end ?? "Unknown end"}
-            </p>
-          </div>
-          {showAdminTools ? (
+        {showAdminTools ? (
+          <header className="mb-6 flex flex-wrap items-start justify-between gap-4 border-b border-cyan-500/30 pb-5">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-300">
+                Fusion Calendar
+              </p>
+              <h1 className="mt-1 text-3xl font-black text-yellow-400 sm:text-5xl">
+                {sortedTracker.fusionName ?? "Unnamed Fusion"}
+              </h1>
+              <p className="mt-2 text-sm text-slate-300">
+                {sortedTracker.dateRange.start ?? "Unknown start"} - {sortedTracker.dateRange.end ?? "Unknown end"}
+              </p>
+            </div>
             <div className="flex flex-wrap gap-3">
               <button
                 type="button"
@@ -90,20 +91,24 @@ export function TrackerDashboard({
                 Reset
               </button>
             </div>
-          ) : null}
-        </header>
+          </header>
+        ) : (
+          <FusionHeroBanner tracker={sortedTracker} />
+        )}
 
         <div
           className={`grid items-stretch gap-4 ${
             showAdminTools
               ? "xl:grid-cols-[minmax(0,1.8fr)_minmax(260px,0.75fr)_minmax(260px,0.75fr)]"
-              : "xl:grid-cols-[minmax(280px,0.45fr)]"
+              : "hidden"
           }`}
         >
           {showAdminTools ? (
             <CalendarDetailsPanel tracker={sortedTracker} onSave={updateTrackerDetails} editable />
           ) : null}
-          <ProgressPanel tracker={sortedTracker} showStatusMessage={showAdminTools} />
+          {showAdminTools ? (
+            <ProgressPanel tracker={sortedTracker} showStatusMessage />
+          ) : null}
           {showAdminTools ? (
             <ImportExportPanel tracker={sortedTracker} onImport={onTrackerChange} />
           ) : null}
