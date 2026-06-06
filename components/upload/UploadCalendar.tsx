@@ -36,7 +36,7 @@ const PRESET_TRACKERS = [
 export function UploadCalendar({
   trackerPath = "/tracker",
   eyebrow = "Raid: Shadow Legends",
-  title = "AI Fusion Tracker",
+  title = "Fusion Tracker",
   subtitle = "Upload a Raid fusion calendar and generate your tracker automatically.",
   showTrackerActions = false,
   showUploadTool = false,
