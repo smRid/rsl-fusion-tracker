@@ -3,6 +3,7 @@
 import { AlertTriangle } from "lucide-react";
 import type { FusionEvent } from "@/types/fusion";
 import { formatDisplayDate, getEventDuration, getEventOffset } from "@/lib/date-utils";
+import { getEventEarnedTotal } from "@/lib/tracker-utils";
 
 export function TimelineEventBar({
   event,
@@ -64,8 +65,8 @@ export function TimelineEventBar({
 }
 
 function formatStatus(event: FusionEvent): string {
-  if (event.status === "earned" && event.earnedFragments !== null && event.earnedFragments !== undefined) {
-    return `earned ${event.earnedFragments}`;
+  if (event.status === "earned") {
+    return `earned ${getEventEarnedTotal(event)}`;
   }
 
   return event.status;
