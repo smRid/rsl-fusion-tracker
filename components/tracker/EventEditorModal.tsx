@@ -10,12 +10,14 @@ export function EventEditorModal({
   event,
   onCancel,
   onSave,
-  onDelete
+  onDelete,
+  editable = true
 }: {
   event: FusionEvent | null;
   onCancel: () => void;
   onSave: (event: FusionEvent) => void;
   onDelete: (eventId: string) => void;
+  editable?: boolean;
 }) {
   const [draft, setDraft] = useState<FusionEvent | null>(event);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +45,11 @@ export function EventEditorModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
-      <section className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded border border-cyan-500/50 bg-slate-900 p-5 shadow-glow">
+      <section
+        className={`max-h-[92vh] w-full overflow-y-auto rounded border border-cyan-500/50 bg-slate-900 shadow-glow ${
+          editable ? "max-w-2xl p-5" : "max-w-sm p-4"
+        }`}
+      >
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-xl font-black text-yellow-300">Edit Event</h2>
           <button type="button" onClick={onCancel} className="rounded p-2 text-slate-300 hover:bg-slate-800">
@@ -51,21 +57,29 @@ export function EventEditorModal({
           </button>
         </div>
 
-        <EventFields draft={draft} onChange={setDraft} />
+        {editable ? (
+          <EventFields draft={draft} onChange={setDraft} />
+        ) : (
+          <StatusOnlyFields draft={draft} onChange={setDraft} />
+        )}
 
         {error ? (
           <div className="mt-4 rounded border border-rose-500/50 bg-rose-950/40 p-3 text-sm text-rose-100">{error}</div>
         ) : null}
 
-        <div className="mt-5 flex flex-wrap justify-between gap-3">
-          <button
-            type="button"
-            onClick={() => onDelete(draft.id)}
-            className="inline-flex items-center gap-2 rounded border border-rose-500/60 px-4 py-2 text-sm font-bold text-rose-100 hover:bg-rose-600/20"
-          >
-            <Trash2 className="h-4 w-4" />
-            Delete
-          </button>
+        <div className={`${editable ? "mt-5" : "mt-4"} flex flex-wrap justify-between gap-3`}>
+          {editable ? (
+            <button
+              type="button"
+              onClick={() => onDelete(draft.id)}
+              className="inline-flex items-center gap-2 rounded border border-rose-500/60 px-4 py-2 text-sm font-bold text-rose-100 hover:bg-rose-600/20"
+            >
+              <Trash2 className="h-4 w-4" />
+              Delete
+            </button>
+          ) : (
+            <div />
+          )}
           <div className="flex gap-3">
             <button
               type="button"
@@ -84,6 +98,37 @@ export function EventEditorModal({
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+function StatusOnlyFields({
+  draft,
+  onChange
+}: {
+  draft: FusionEvent;
+  onChange: (event: FusionEvent) => void;
+}) {
+  const earnedFragmentOptions = getEarnedFragmentOptions(draft);
+
+  return (
+    <div className="mt-4">
+      <label>
+        <span className="text-sm font-bold text-slate-200">Status</span>
+        <select
+          value={getStatusSelectValue(draft)}
+          onChange={(event) => onChange(applyStatusSelectValue(draft, event.target.value))}
+          className="mt-1 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-cyan-400"
+        >
+          <option value="pending">pending</option>
+          {earnedFragmentOptions.map((fragments) => (
+            <option key={fragments} value={`earned-${fragments}`}>
+              earned {fragments}
+            </option>
+          ))}
+          <option value="skipped">skipped</option>
+        </select>
+      </label>
     </div>
   );
 }

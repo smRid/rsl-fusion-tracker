@@ -14,7 +14,10 @@
       "type": "Tournament",
       "startDate": "2026-06-04",
       "endDate": "2026-06-08",
-      "fragments": 20,
+      "fragments": 10,
+      "leaderboardFragments": 10,
+      "earnedFragments": null,
+      "gridPosition": 2,
       "status": "pending",
       "needsReview": false
     },
@@ -25,6 +28,9 @@
       "startDate": "2026-06-04",
       "endDate": "2026-06-07",
       "fragments": 5,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 1,
       "status": "pending",
       "needsReview": false,
       "notes": ""
@@ -36,6 +42,9 @@
       "startDate": "2026-06-05",
       "endDate": "2026-06-08",
       "fragments": 5,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 1,
       "status": "pending",
       "needsReview": false
     },
@@ -46,6 +55,9 @@
       "startDate": "2026-06-05",
       "endDate": "2026-06-08",
       "fragments": 20,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 2,
       "status": "pending",
       "needsReview": false
     },
@@ -56,6 +68,9 @@
       "startDate": "2026-06-06",
       "endDate": "2026-06-09",
       "fragments": 5,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 3,
       "status": "pending",
       "needsReview": false
     },
@@ -66,6 +81,9 @@
       "startDate": "2026-06-06",
       "endDate": "2026-06-09",
       "fragments": 5,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 3,
       "status": "pending",
       "needsReview": false
     },
@@ -76,6 +94,9 @@
       "startDate": "2026-06-07",
       "endDate": "2026-06-10",
       "fragments": 5,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 4,
       "status": "pending",
       "needsReview": false
     },
@@ -86,6 +107,9 @@
       "startDate": "2026-06-09",
       "endDate": "2026-06-12",
       "fragments": 5,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 4,
       "status": "pending",
       "needsReview": false
     },
@@ -96,6 +120,9 @@
       "startDate": "2026-06-09",
       "endDate": "2026-06-11",
       "fragments": 15,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 1,
       "status": "pending",
       "needsReview": false
     },
@@ -106,6 +133,9 @@
       "startDate": "2026-06-10",
       "endDate": "2026-06-13",
       "fragments": 5,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 6,
       "status": "pending",
       "needsReview": false
     },
@@ -116,6 +146,9 @@
       "startDate": "2026-06-11",
       "endDate": "2026-06-15",
       "fragments": 10,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 7,
       "status": "pending",
       "needsReview": false
     },
@@ -126,6 +159,9 @@
       "startDate": "2026-06-11",
       "endDate": "2026-06-14",
       "fragments": 5,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 5,
       "status": "pending",
       "needsReview": false
     },
@@ -135,7 +171,10 @@
       "type": "Tournament",
       "startDate": "2026-06-12",
       "endDate": "2026-06-15",
-      "fragments": 25,
+      "fragments": 15,
+      "leaderboardFragments": 10,
+      "earnedFragments": null,
+      "gridPosition": 6,
       "status": "pending",
       "needsReview": false
     },
@@ -146,6 +185,9 @@
       "startDate": "2026-06-13",
       "endDate": "2026-06-16",
       "fragments": 5,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 7,
       "status": "pending",
       "needsReview": false
     },
@@ -156,6 +198,9 @@
       "startDate": "2026-06-13",
       "endDate": "2026-06-16",
       "fragments": 5,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 8,
       "status": "pending",
       "needsReview": false
     },
@@ -166,6 +211,9 @@
       "startDate": "2026-06-14",
       "endDate": "2026-06-17",
       "fragments": 5,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 8,
       "status": "pending",
       "needsReview": false
     },
@@ -176,11 +224,14 @@
       "startDate": "2026-06-14",
       "endDate": "2026-06-17",
       "fragments": 5,
+      "leaderboardFragments": null,
+      "earnedFragments": null,
+      "gridPosition": 9,
       "status": "pending",
       "needsReview": false
     }
   ],
   "createdAt": "2026-06-05T15:18:42.084Z",
-  "updatedAt": "2026-06-05T15:28:29.039Z",
+  "updatedAt": "2026-06-06T14:16:30.840Z",
   "source": "ai"
 }

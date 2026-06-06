@@ -141,6 +141,7 @@ export function TrackerDashboard({
         onCancel={() => setEditingEvent(null)}
         onSave={handleSaveEvent}
         onDelete={handleDeleteEvent}
+        editable={showAdminTools}
       />
     </main>
   );

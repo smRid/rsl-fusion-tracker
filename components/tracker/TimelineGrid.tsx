@@ -51,16 +51,7 @@ export function TimelineGrid({
       {dateRange.length ? (
         <div className="timeline-scroll overflow-x-auto rounded border border-slate-700 2xl:overflow-x-visible">
           <div className="w-full" style={{ minWidth: minGridWidth }}>
-            <div className="sticky top-0 z-10 grid bg-slate-950" style={{ gridTemplateColumns: `repeat(${dateRange.length}, minmax(${MIN_DAY_WIDTH}px, 1fr))` }}>
-              {dateRange.map((date) => (
-                <div key={date} className="border-b border-r border-slate-700 px-2 py-3 text-center">
-                  <p className="text-[11px] font-bold text-slate-400">
-                    {new Intl.DateTimeFormat("en", { weekday: "short", timeZone: "UTC" }).format(new Date(`${date}T00:00:00Z`))}
-                  </p>
-                  <p className="mt-1 text-xs font-black text-cyan-100 sm:text-sm">{formatDisplayDate(date)}</p>
-                </div>
-              ))}
-            </div>
+            <TimelineDateHeader dates={dateRange} sticky />
 
             <TimelineLane
               title="Tournaments"
@@ -78,6 +69,7 @@ export function TimelineGrid({
               dayWidthCss={dayWidthCss}
               onSelectEvent={onSelectEvent}
             />
+            <TimelineDateHeader dates={dateRange} />
           </div>
         </div>
       ) : (
@@ -108,6 +100,24 @@ export function TimelineGrid({
         </div>
       ) : null}
     </section>
+  );
+}
+
+function TimelineDateHeader({ dates, sticky = false }: { dates: string[]; sticky?: boolean }) {
+  return (
+    <div
+      className={`${sticky ? "sticky top-0 z-10" : ""} grid bg-slate-950`}
+      style={{ gridTemplateColumns: `repeat(${dates.length}, minmax(${MIN_DAY_WIDTH}px, 1fr))` }}
+    >
+      {dates.map((date) => (
+        <div key={date} className="border-b border-r border-slate-700 px-2 py-3 text-center">
+          <p className="text-[11px] font-bold text-slate-400">
+            {new Intl.DateTimeFormat("en", { weekday: "short", timeZone: "UTC" }).format(new Date(`${date}T00:00:00Z`))}
+          </p>
+          <p className="mt-1 text-xs font-black text-cyan-100 sm:text-sm">{formatDisplayDate(date)}</p>
+        </div>
+      ))}
+    </div>
   );
 }
 
