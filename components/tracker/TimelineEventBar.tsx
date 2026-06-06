@@ -22,7 +22,8 @@ export function TimelineEventBar({
   const offset = getEventOffset(rangeStart, startDate);
   const duration = getEventDuration(startDate, endDate);
   const isMissingDates = !event.startDate || !event.endDate;
-  const span = isMissingDates ? 2 : duration;
+  const startMidpoint = offset + 0.5;
+  const midpointSpan = isMissingDates ? 2 : Math.max(0.5, duration - 1);
   const leaderboardFragments = event.leaderboardFragments ?? 0;
   const statusClass =
     event.status === "earned"
@@ -38,9 +39,9 @@ export function TimelineEventBar({
       title={`${event.name} - ${formatDisplayDate(event.startDate)} to ${formatDisplayDate(event.endDate)}`}
       className={`absolute flex h-10 items-center justify-between gap-2 rounded border px-2.5 text-left text-[11px] shadow-lg transition hover:-translate-y-0.5 hover:border-yellow-300 sm:text-xs ${isMissingDates ? "border-dashed" : ""} ${statusClass}`}
       style={{
-        left: `calc(${offset} * ${dayWidthCss} + 8px)`,
+        left: `calc(${startMidpoint} * ${dayWidthCss})`,
         top,
-        width: `calc(${span} * ${dayWidthCss} - 16px)`
+        width: `calc(${midpointSpan} * ${dayWidthCss})`
       }}
     >
       <span className="min-w-0">
