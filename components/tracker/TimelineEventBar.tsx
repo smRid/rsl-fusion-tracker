@@ -62,7 +62,7 @@ export function TimelineEventBar({
       </span>
       <span className="flex shrink-0 items-center gap-1">
         {event.needsReview ? <AlertTriangle className="h-4 w-4 text-yellow-200" /> : null}
-        <span className="rounded border border-yellow-300/70 bg-slate-950/75 px-2 py-1 font-black text-yellow-200">
+        <span className="flex min-h-8 min-w-9 shrink-0 items-center justify-center rounded-t rounded-b-[14px] border border-yellow-300/70 bg-slate-950/75 px-2 py-1 font-black text-yellow-200 shadow-[0_0_10px_rgba(250,204,21,0.18)]">
           {event.fragments ?? "?"}
           {leaderboardFragments > 0 ? (
             <span className="text-emerald-300">+{leaderboardFragments}</span>
