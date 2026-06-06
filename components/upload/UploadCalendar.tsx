@@ -33,7 +33,17 @@ const PRESET_TRACKERS = [
   }
 ];
 
-export function UploadCalendar() {
+export function UploadCalendar({
+  trackerPath = "/tracker",
+  eyebrow = "Raid: Shadow Legends",
+  title = "AI Fusion Tracker",
+  subtitle = "Upload a Raid fusion calendar and generate your tracker automatically."
+}: {
+  trackerPath?: string;
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+} = {}) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [existingTracker, setExistingTracker] = useState<FusionTracker | null>(null);
@@ -117,7 +127,7 @@ export function UploadCalendar() {
 
       const tracker = normalizeTracker(body);
       saveTracker(tracker);
-      router.push("/tracker");
+      router.push(trackerPath);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Something went wrong while generating the tracker.");
     } finally {
@@ -139,7 +149,7 @@ export function UploadCalendar() {
       const body = await response.json();
       const tracker = normalizeTracker(body);
       saveTracker(tracker);
-      router.push("/tracker");
+      router.push(trackerPath);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Something went wrong while loading the preset tracker.");
     } finally {
@@ -159,16 +169,16 @@ export function UploadCalendar() {
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col">
         <header className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-cyan-500/30 pb-5">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-300">Raid: Shadow Legends</p>
-            <h1 className="mt-2 text-4xl font-black text-yellow-400 sm:text-6xl">AI Fusion Tracker</h1>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-300">{eyebrow}</p>
+            <h1 className="mt-2 text-4xl font-black text-yellow-400 sm:text-6xl">{title}</h1>
             <p className="mt-3 max-w-2xl text-base text-slate-300 sm:text-lg">
-              Upload a Raid fusion calendar and generate your tracker automatically.
+              {subtitle}
             </p>
           </div>
           {existingTracker ? (
             <div className="flex gap-3">
               <Link
-                href="/tracker"
+                href={trackerPath}
                 className="rounded border border-cyan-400 bg-cyan-400 px-4 py-2 text-sm font-bold text-slate-950 hover:bg-cyan-300"
               >
                 Continue Tracker
