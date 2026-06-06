@@ -26,6 +26,7 @@ export function TimelineEventBar({
   const startMidpoint = offset + 0.5;
   const midpointSpan = isMissingDates ? 2 : Math.max(0.5, duration - 1);
   const leaderboardFragments = event.leaderboardFragments ?? 0;
+  const typeIcon = event.type === "Tournament" ? "/tournament.webp" : "/event.webp";
   const statusClass =
     event.status === "earned"
       ? "border-emerald-300/80 bg-emerald-700/90 text-emerald-50"
@@ -38,17 +39,25 @@ export function TimelineEventBar({
       type="button"
       onClick={onClick}
       title={`${event.name} - ${formatDisplayDate(event.startDate)} to ${formatDisplayDate(event.endDate)}`}
-      className={`absolute flex h-10 items-center justify-between gap-2 rounded border px-2.5 text-left text-[11px] shadow-lg transition hover:-translate-y-0.5 hover:border-yellow-300 sm:text-xs ${isMissingDates ? "border-dashed" : ""} ${statusClass}`}
+      className={`absolute flex h-10 items-center justify-between gap-2 rounded border px-2 text-left text-[11px] shadow-lg transition hover:-translate-y-0.5 hover:border-yellow-300 sm:text-xs ${isMissingDates ? "border-dashed" : ""} ${statusClass}`}
       style={{
         left: `calc(${startMidpoint} * ${dayWidthCss})`,
         top,
         width: `calc(${midpointSpan} * ${dayWidthCss})`
       }}
     >
-      <span className="min-w-0">
-        <span className="block truncate font-black">{event.name}</span>
-        <span className="block truncate text-[10px] opacity-80 sm:text-[11px]">
-          {isMissingDates ? "Set dates" : event.type} - {formatStatus(event)}
+      <span className="flex min-w-0 items-center gap-2">
+        <img
+          src={typeIcon}
+          alt=""
+          aria-hidden="true"
+          className="h-6 w-6 shrink-0 rounded-sm object-contain"
+        />
+        <span className="min-w-0">
+          <span className="block truncate font-black">{event.name}</span>
+          <span className="block truncate text-[10px] opacity-80 sm:text-[11px]">
+            {isMissingDates ? "Set dates" : event.type} - {formatStatus(event)}
+          </span>
         </span>
       </span>
       <span className="flex shrink-0 items-center gap-1">
